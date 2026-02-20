@@ -21,7 +21,7 @@ html, body, [class*="css"] { font-family: 'Inter', sans-serif; }
 /* ── Sidebar ── */
 section[data-testid="stSidebar"] {
     background: linear-gradient(180deg, #0d2137 0%, #1a3a5c 100%);
-    border-right: 3px solid #e8a020;
+    border-right: 3px solid #2a4a6b;
 }
 section[data-testid="stSidebar"] * { color: #f0f4f8 !important; }
 section[data-testid="stSidebar"] .stRadio label {
@@ -32,7 +32,7 @@ section[data-testid="stSidebar"] .stRadio label {
 
 /* ── Header principal ── */
 .main-header {
-    background: linear-gradient(135deg, #0d2137 0%, #1a3a5c 60%, #e8a020 100%);
+    background: linear-gradient(135deg, #0d2137 0%, #1a3a5c 100%);
     padding: 1.5rem 2rem;
     border-radius: 12px;
     margin-bottom: 1.5rem;
@@ -49,7 +49,7 @@ section[data-testid="stSidebar"] .stRadio label {
     color: #1a3a5c;
     font-size: 1.2rem;
     font-weight: 600;
-    border-bottom: 2px solid #e8a020;
+    border-bottom: 2px solid #2563eb;
     padding-bottom: .5rem;
     margin-bottom: 1rem;
 }
@@ -167,7 +167,7 @@ def render_sidebar(instancia: str) -> str:
         st.markdown("<hr style='border-color:#2a4a6b;margin-top:1rem;'>", unsafe_allow_html=True)
         st.markdown(
             f'<div style="font-size:.72rem;color:#6b8fb5;text-align:center;">'
-            f'Instancia: <strong style="color:#e8a020">{instancia}</strong></div>',
+            f'Instancia: <strong style="color:#60a5fa">{instancia}</strong></div>',
             unsafe_allow_html=True,
         )
         if st.button("🔄 Renovar sesión", use_container_width=True):
