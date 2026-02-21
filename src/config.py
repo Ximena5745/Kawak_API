@@ -27,23 +27,38 @@ FREQUENCIES: dict[int, str] = {
 def get_credentials() -> tuple[str, str, str, str]:
     """
     Devuelve (email, password, instancia, base_url).
-    Prioridad: st.secrets["kawak"] → valores por defecto.
+    Las credenciales deben estar en .streamlit/secrets.toml (local)
+    o en Streamlit Cloud → Settings → Secrets.
+
+    Formato requerido en secrets.toml:
+        [kawak]
+        email     = "usuario@dominio.com"
+        password  = "contraseña"
+        instancia = "nombre_instancia"
+        base_url  = "https://api.kawak.com.co"   # opcional
     """
     try:
         cfg = st.secrets["kawak"]
-        return (
-            cfg.get("email",     "aquiroga@poligran.edu.co"),
-            cfg.get("password",  "tPLLryr7J2925F7U"),
-            cfg.get("instancia", "poligran"),
-            cfg.get("base_url",  "https://api.kawak.com.co"),
+    except (KeyError, FileNotFoundError):
+        st.error(
+            "⚠️ **Credenciales no configuradas.** "
+            "Crea el archivo `.streamlit/secrets.toml` con la sección `[kawak]` "
+            "o configura los Secrets en Streamlit Cloud. "
+            "Consulta el archivo `.streamlit/secrets.toml.example` como guía."
         )
-    except Exception:
-        return (
-            "aquiroga@poligran.edu.co",
-            "tPLLryr7J2925F7U",
-            "poligran",
-            "https://api.kawak.com.co",
-        )
+        st.stop()
+
+    for field in ("email", "password", "instancia"):
+        if not cfg.get(field):
+            st.error(f"⚠️ Falta el campo `{field}` en la sección `[kawak]` de secrets.toml.")
+            st.stop()
+
+    return (
+        cfg["email"],
+        cfg["password"],
+        cfg["instancia"],
+        cfg.get("base_url", "https://api.kawak.com.co"),
+    )
 
 
 def generate_dates_by_year(start: int = 2015, end: int = 2030) -> dict[str, list[tuple[str, str]]]:

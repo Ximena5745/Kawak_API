@@ -1,18 +1,40 @@
+import os
 import requests
 import json
 import pandas as pd
 import time
-import csv 
+import csv
+from pathlib import Path
+from dotenv import load_dotenv
+
+# ─── Carga automática del archivo .env ───────────────────────────────────────
+# El archivo .env debe estar en la misma carpeta que este script.
+# Nunca subas .env a git (está en .gitignore).
+_env_path = Path(__file__).parent / ".env"
+load_dotenv(dotenv_path=_env_path)
+
+_EMAIL     = os.environ.get("KAWAK_EMAIL",     "")
+_PASSWORD  = os.environ.get("KAWAK_PASSWORD",  "")
+_INSTANCIA = os.environ.get("KAWAK_INSTANCIA", "")
+
+if not all([_EMAIL, _PASSWORD, _INSTANCIA]):
+    raise EnvironmentError(
+        "Faltan credenciales. Crea el archivo .env en la misma carpeta con:\n"
+        "  KAWAK_EMAIL=tu_email\n"
+        "  KAWAK_PASSWORD=tu_contraseña\n"
+        "  KAWAK_INSTANCIA=nombre_instancia\n"
+        "Consulta .env.example como guía."
+    )
 
 # Authentications
 url = "https://api.kawak.com.co/login"
 payload = {
-    "email": "aquiroga@poligran.edu.co",
-    "password": "tPLLryr7J2925F7U",
-    "instancia": "poligran"
+    "email":     _EMAIL,
+    "password":  _PASSWORD,
+    "instancia": _INSTANCIA,
 }
-response = requests.post(url, json=payload)  # Ensure payload is sent as JSON
-response.raise_for_status()  # Check for request errors
+response = requests.post(url, json=payload)
+response.raise_for_status()
 
 try:
     token = response.json()["message"]["Authorization"]

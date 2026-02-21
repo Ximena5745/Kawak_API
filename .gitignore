@@ -20,6 +20,9 @@ ENV/
 # IMPORTANTE: secrets.toml contiene credenciales — nunca subir a git
 .streamlit/secrets.toml
 
+# ─── Variables de entorno ─────────────────────────────────────────────────────
+.env
+
 # ─── Datos y archivos de salida ───────────────────────────────────────────────
 *.xlsx
 *.csv
