@@ -18,6 +18,7 @@ MONTHS_ES = [
 FREQUENCIES: dict[int, str] = {
     2: "Mensual",
     3: "Trimestral",
+    4: "Bimestral",
     5: "Quincenal",
     6: "Semestral",
     7: "Anual",
